@@ -1,0 +1,319 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>02.网络应用 | 福生老爹的博客</title><meta name="author" content="福生老爹"><meta name="copyright" content="福生老爹"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="计算机网络应用体系结构客户&#x2F;服务器（C&#x2F;S）结构 主要特征是通信只在客户与服务器之间进行，客户与客户之间不进行直接通信  P2P(Peer to Peer)结构 每个对等端都同时具备C&#x2F;S应用的客户与服务器的特征，是一个服务器与客户的结合体，对等端之间直接通信  混合结构 既有中心服务器的存在，又有对等端（客户）间的直接通信  网络应用通信基本原理 C&#x2F;S通信基本原理：服务器端运行的是服务器进程，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02.网络应用">
+<meta property="og:url" content="https://www.morale.top/2021/03/01/%E8%87%AA%E8%80%83/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/02.%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="福生老爹的博客">
+<meta property="og:description" content="计算机网络应用体系结构客户&#x2F;服务器（C&#x2F;S）结构 主要特征是通信只在客户与服务器之间进行，客户与客户之间不进行直接通信  P2P(Peer to Peer)结构 每个对等端都同时具备C&#x2F;S应用的客户与服务器的特征，是一个服务器与客户的结合体，对等端之间直接通信  混合结构 既有中心服务器的存在，又有对等端（客户）间的直接通信  网络应用通信基本原理 C&#x2F;S通信基本原理：服务器端运行的是服务器进程，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-02-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-03T03:27:46.800Z">
+<meta property="article:author" content="福生老爹">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://www.morale.top/2021/03/01/%E8%87%AA%E8%80%83/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/02.%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}
+
+// https://stackoverflow.com/questions/16839698/jquery-getscript-alternative-in-native-javascript
+const getScript = url => new Promise((resolve, reject) => {
+  const script = document.createElement('script')
+  script.src = url
+  script.async = true
+  script.onerror = reject
+  script.onload = script.onreadystatechange = function() {
+    const loadState = this.readyState
+    if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+    script.onload = script.onreadystatechange = null
+    resolve()
+  }
+  document.head.appendChild(script)
+})</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: undefined,
+  isToc: true,
+  postUpdate: '2021-03-03 11:27:46'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+   if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }const asideStatus = saveToLocal.get('aside-status')
+if (asideStatus !== undefined) {
+   if (asideStatus === 'hide') {
+     document.documentElement.classList.add('hide-aside')
+   } else {
+     document.documentElement.classList.remove('hide-aside')
+   }
+}})()</script><meta name="generator" content="Hexo 5.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3711401417,2587469459&amp;fm=26&amp;gp=0.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 前端</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/JAVASE/"><i class="fa-fw fas fa-html"></i><span> HTML</span></a></li><li><a class="site-page" href="/categories/JAVASE/"><i class="fa-fw fas fa-css"></i><span> CSS</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> JAVA</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/JAVASE/"><i class="fa-fw fas fa-javase"></i><span> JAVASE</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">福生老爹的博客</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 前端</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/JAVASE/"><i class="fa-fw fas fa-html"></i><span> HTML</span></a></li><li><a class="site-page" href="/categories/JAVASE/"><i class="fa-fw fas fa-css"></i><span> CSS</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> JAVA</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/categories/JAVASE/"><i class="fa-fw fas fa-javase"></i><span> JAVASE</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">02.网络应用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-02-28T16:00:00.000Z" title="发表于 2021-03-01 00:00:00">2021-03-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-03T03:27:46.800Z" title="更新于 2021-03-03 11:27:46">2021-03-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E7%A7%91/">理科</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%86%E7%A7%91/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/">计算机网络原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="计算机网络应用体系结构"><a href="#计算机网络应用体系结构" class="headerlink" title="计算机网络应用体系结构"></a>计算机网络应用体系结构</h2><h3 id="客户-服务器（C-S）结构"><a href="#客户-服务器（C-S）结构" class="headerlink" title="客户/服务器（C/S）结构"></a>客户/服务器（C/S）结构</h3><blockquote>
+<p>主要特征是通信只在客户与服务器之间进行，客户与客户之间不进行直接通信</p>
+</blockquote>
+<h3 id="P2P-Peer-to-Peer-结构"><a href="#P2P-Peer-to-Peer-结构" class="headerlink" title="P2P(Peer to Peer)结构"></a>P2P(Peer to Peer)结构</h3><blockquote>
+<p>每个对等端都同时具备C/S应用的客户与服务器的特征，是一个服务器与客户的结合体，对等端之间直接通信</p>
+</blockquote>
+<h3 id="混合结构"><a href="#混合结构" class="headerlink" title="混合结构"></a>混合结构</h3><blockquote>
+<p>既有中心服务器的存在，又有对等端（客户）间的直接通信</p>
+</blockquote>
+<h2 id="网络应用通信基本原理"><a href="#网络应用通信基本原理" class="headerlink" title="网络应用通信基本原理"></a>网络应用通信基本原理</h2><blockquote>
+<p>C/S通信基本原理：服务器端运行的是服务器进程，被动地等待用户请求服务；客户端运行的是客户进程，主动发起通信，请求服务器进程提供服务。应用进程间遵循应用层<em>协议</em>交换应用层报文。</p>
+</blockquote>
+<h2 id="域名系统-DNS-UDP53"><a href="#域名系统-DNS-UDP53" class="headerlink" title="域名系统(DNS)UDP53"></a>域名系统(DNS)UDP53</h2><h3 id="层次化域名空间"><a href="#层次化域名空间" class="headerlink" title="层次化域名空间"></a>层次化域名空间</h3><blockquote>
+<p>层次树状结构的命名方法：</p>
+<ol>
+<li>国家顶级域名nTLD</li>
+<li>通用顶级域名gTLD</li>
+<li>基础结构域名</li>
+</ol>
+</blockquote>
+<h3 id="域名服务器"><a href="#域名服务器" class="headerlink" title="域名服务器"></a>域名服务器</h3><blockquote>
+<ol>
+<li>域名解析：将域名映射为IP地址的过程</li>
+<li>域名服务器：为了实现域名解析，需要建立分布式数据库，存储网络中域名与IP地址的映射关系数据，这些数据库存储在域名服务器上，域名服务器根据用户的请求提供域名映射服务。</li>
+<li>域名服务器分类：根域名服务器（13套、a.root-server.net）、顶级域名服务器、权威域名服务器、本地域名服务器</li>
+</ol>
+</blockquote>
+<h3 id="域名解析过程"><a href="#域名解析过程" class="headerlink" title="域名解析过程"></a>域名解析过程</h3><blockquote>
+<ol>
+<li>递归查询：代替查询主机或其他域名服务器，进行进一步的域名查询，并将最终解析结果发送给查询主机或者服务器</li>
+<li>迭代查询：只是将下一步要查询的服务器告知查询主机或者服务器</li>
+</ol>
+</blockquote>
+<h2 id="万维网应用"><a href="#万维网应用" class="headerlink" title="万维网应用"></a>万维网应用</h2><h3 id="万维网应用结构"><a href="#万维网应用结构" class="headerlink" title="万维网应用结构"></a>万维网应用结构</h3><blockquote>
+<p>web服务器<br>浏览器<br>超文本传输协议（http)url</p>
+</blockquote>
+<h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><blockquote>
+<p>超文本传输协议，定义浏览器如何向web服务器发送请求以及web服务器如何向浏览器进行响应</p>
+</blockquote>
+<h4 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h4><blockquote>
+<p>HTTP/1.O和HTTP/1.1</p>
+</blockquote>
+<h4 id="HTTP连接："><a href="#HTTP连接：" class="headerlink" title="HTTP连接："></a>HTTP连接：</h4><h5 id="非持久连接"><a href="#非持久连接" class="headerlink" title="非持久连接"></a>非持久连接</h5><blockquote>
+<ol>
+<li>串行方式：请求每个对象且每次都要新建立TCP连接</li>
+<li>并行方式：请求每个对象建立一个TCP连接</li>
+</ol>
+</blockquote>
+<h5 id="持久连接"><a href="#持久连接" class="headerlink" title="持久连接"></a>持久连接</h5><blockquote>
+<ol>
+<li>非流水方式持久连接</li>
+<li>流水方式持久连接</li>
+</ol>
+</blockquote>
+<h4 id="HTTP报文："><a href="#HTTP报文：" class="headerlink" title="HTTP报文："></a>HTTP报文：</h4><h5 id="请求报文：从客户端向服务器发送请求报文"><a href="#请求报文：从客户端向服务器发送请求报文" class="headerlink" title="请求报文：从客户端向服务器发送请求报文"></a>请求报文：从客户端向服务器发送请求报文</h5><blockquote>
+<ol>
+<li>请求行:方法(GET、HEAD、POST添数据、OPTION求选项、PUT存文档) URL 版本</li>
+<li>首部行:首部行字段名: 值…</li>
+<li>实体主体</li>
+</ol>
+</blockquote>
+<h5 id="响应报文：从服务器到客户端的回答"><a href="#响应报文：从服务器到客户端的回答" class="headerlink" title="响应报文：从服务器到客户端的回答"></a>响应报文：从服务器到客户端的回答</h5><blockquote>
+<ol>
+<li>状态行:版本 状态么 短语</li>
+<li>首部行</li>
+<li>实体主体</li>
+</ol>
+</blockquote>
+<h6 id="HTTP状态码分类"><a href="#HTTP状态码分类" class="headerlink" title="HTTP状态码分类"></a>HTTP状态码分类</h6><blockquote>
+<ol>
+<li>1xx 信息提示</li>
+<li>2xx 成功</li>
+<li>3xx 重定向</li>
+<li>4xx 客户端错误</li>
+<li>5xx 服务器端错误</li>
+</ol>
+</blockquote>
+<h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h3><blockquote>
+<p>Cookie中文名称为小型文本文件，值某些网站为了辨别用户身份、进行会话跟踪而存储在用户本地终端上的数据<br>弥补了HTTP协议无状态性的不足，有利于进行用户跟踪并提供针对性的服务，但也带来一些安全问题</p>
+<ol>
+<li>服务器生成Cookie,发送给浏览器</li>
+<li>浏览器保存Cookie</li>
+<li>下次请求同时发送Cookie</li>
+<li>服务器根据Cookie检索用户历史行为数据</li>
+</ol>
+</blockquote>
+<h2 id="Internet电子邮件"><a href="#Internet电子邮件" class="headerlink" title="Internet电子邮件"></a>Internet电子邮件</h2><h3 id="电子邮件系统结构"><a href="#电子邮件系统结构" class="headerlink" title="电子邮件系统结构"></a>电子邮件系统结构</h3><blockquote>
+<p>电子邮件系统主要包括邮件服务器、简单邮件传输协议（SMTP）、用户代理、邮件读取协议等</p>
+</blockquote>
+<h3 id="SMTP"><a href="#SMTP" class="headerlink" title="SMTP"></a>SMTP</h3><blockquote>
+<p>SMTP是Internet电子邮件中核心应用层协议，实现邮件服务器之间或用户代理到邮件服务器之间的邮件传输。<br>SMTP使用传输层TCP实现客套数据传输，端口号25.<br>SMTP通过3个阶段的应用层交互完成邮件的传输，分别是握手阶段、邮件传输阶段和关闭阶段<br>SMTP的基本交互方式是SMTP客户端发送命令，命令后面可能携带参数，SMTP服务器对命令进行应答。</p>
+</blockquote>
+<h3 id="电子邮件格式与MIME"><a href="#电子邮件格式与MIME" class="headerlink" title="电子邮件格式与MIME"></a>电子邮件格式与MIME</h3><blockquote>
+<ol>
+<li>电子邮件包括首部、空白行、主体3部分 To subject cc From date reply-to等关键词</li>
+<li>MIME(多用途互联网邮件扩展)将非7位ASCII码文本内容转换为7位ASCII码文本内容然后再利用SMTP进行传输</li>
+</ol>
+</blockquote>
+<h3 id="邮件读取协议"><a href="#邮件读取协议" class="headerlink" title="邮件读取协议"></a>邮件读取协议</h3><blockquote>
+<ol>
+<li>第三版的邮局协议（POP3端口110）</li>
+<li>互联网邮件访问协议(IMAP)</li>
+<li>HTTP</li>
+</ol>
+</blockquote>
+<h2 id="FTP-文件传输协议"><a href="#FTP-文件传输协议" class="headerlink" title="FTP(文件传输协议)"></a>FTP(文件传输协议)</h2><blockquote>
+<p>文件传送协议：在互联网的两个主机间实现文件互传的应用层协议。<br>C/S模式，采用<em>控制连接</em>（21端口）传输控制命令，<em>数据连接</em>（20端口）传输文件内容</p>
+</blockquote>
+<h2 id="P2P应用"><a href="#P2P应用" class="headerlink" title="P2P应用"></a>P2P应用</h2><blockquote>
+<p>P2P应用的优势：充分聚集利用了端系统（对等方主机）的计算能力以及网络传输带宽，对服务器的依赖很小。</p>
+</blockquote>
+<h2 id="Socket编程基础"><a href="#Socket编程基础" class="headerlink" title="Socket编程基础"></a>Socket编程基础</h2><blockquote>
+<p>Socket接口模型：<br>网络应用进程通信时需要通过API接口请求底层协议的服务。可以创建数据报类型套接字SOCK_DGRAM,流式套接字SOCK_STREAM和原始套接字SOCK_RAW.<br>UDP(无连接)dgram stream raw<br>TCP(有连接)</p>
+</blockquote>
+<h3 id="TCP服务器"><a href="#TCP服务器" class="headerlink" title="TCP服务器"></a>TCP服务器</h3><blockquote>
+<ol>
+<li>建立服务(socket)</li>
+<li>绑定端口号（bind）</li>
+<li>服务端监听(listen)</li>
+<li>建立连接(accept)</li>
+<li>数据请求(recv)</li>
+<li>数据应答(send)</li>
+<li>关闭TCP连接(close)</li>
+<li>关闭监听(colose)</li>
+</ol>
+</blockquote>
+<h3 id="TCP客户"><a href="#TCP客户" class="headerlink" title="TCP客户"></a>TCP客户</h3><blockquote>
+<ol>
+<li>建立端口(socket)</li>
+<li>建立连接(connet)</li>
+<li>数据请求(send)</li>
+<li>数据应答(recv)</li>
+<li>关闭连接(close)</li>
+</ol>
+</blockquote>
+<h3 id="UDP服务器"><a href="#UDP服务器" class="headerlink" title="UDP服务器"></a>UDP服务器</h3><blockquote>
+<ol>
+<li>socket</li>
+<li>bind</li>
+<li>recvfrom</li>
+<li>sendto</li>
+<li>close</li>
+</ol>
+</blockquote>
+<h3 id="UDP客户"><a href="#UDP客户" class="headerlink" title="UDP客户"></a>UDP客户</h3><blockquote>
+<ol>
+<li>socket</li>
+<li>sendto</li>
+<li>recvfrom</li>
+<li>close</li>
+</ol>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">福生老爹</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.morale.top/2021/03/01/%E8%87%AA%E8%80%83/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/02.%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8/">https://www.morale.top/2021/03/01/%E8%87%AA%E8%80%83/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/02.%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.morale.top" target="_blank">福生老爹的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/03/01/%E8%87%AA%E8%80%83/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/01.%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%A6%82%E8%BF%B0/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">01.计算机网络概述</div></div></a></div><div class="next-post pull-right"><a href="/2021/03/01/%E8%87%AA%E8%80%83/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%8E%9F%E7%90%86/03.%E4%BC%A0%E8%BE%93%E5%B1%82/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">03.传输层</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3711401417,2587469459&amp;fm=26&amp;gp=0.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">福生老爹</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/fushenglaodie"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">这是我的博客</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">计算机网络应用体系结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7-%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%88C-S%EF%BC%89%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">客户&#x2F;服务器（C&#x2F;S）结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P2P-Peer-to-Peer-%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.</span> <span class="toc-text">P2P(Peer to Peer)结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.</span> <span class="toc-text">混合结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E9%80%9A%E4%BF%A1%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">网络应用通信基本原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E7%B3%BB%E7%BB%9F-DNS-UDP53"><span class="toc-number">3.</span> <span class="toc-text">域名系统(DNS)UDP53</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%82%E6%AC%A1%E5%8C%96%E5%9F%9F%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="toc-number">3.1.</span> <span class="toc-text">层次化域名空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">3.2.</span> <span class="toc-text">域名服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90%E8%BF%87%E7%A8%8B"><span class="toc-number">3.3.</span> <span class="toc-text">域名解析过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%87%E7%BB%B4%E7%BD%91%E5%BA%94%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">万维网应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%87%E7%BB%B4%E7%BD%91%E5%BA%94%E7%94%A8%E7%BB%93%E6%9E%84"><span class="toc-number">4.1.</span> <span class="toc-text">万维网应用结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP"><span class="toc-number">4.2.</span> <span class="toc-text">HTTP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">4.2.1.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%88%E6%9C%AC"><span class="toc-number">4.2.2.</span> <span class="toc-text">版本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP%E8%BF%9E%E6%8E%A5%EF%BC%9A"><span class="toc-number">4.2.3.</span> <span class="toc-text">HTTP连接：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%9E%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5"><span class="toc-number">4.2.3.1.</span> <span class="toc-text">非持久连接</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5"><span class="toc-number">4.2.3.2.</span> <span class="toc-text">持久连接</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP%E6%8A%A5%E6%96%87%EF%BC%9A"><span class="toc-number">4.2.4.</span> <span class="toc-text">HTTP报文：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87%EF%BC%9A%E4%BB%8E%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%90%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87"><span class="toc-number">4.2.4.1.</span> <span class="toc-text">请求报文：从客户端向服务器发送请求报文</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87%EF%BC%9A%E4%BB%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%88%B0%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%9B%9E%E7%AD%94"><span class="toc-number">4.2.4.2.</span> <span class="toc-text">响应报文：从服务器到客户端的回答</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#HTTP%E7%8A%B6%E6%80%81%E7%A0%81%E5%88%86%E7%B1%BB"><span class="toc-number">4.2.4.2.1.</span> <span class="toc-text">HTTP状态码分类</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cookie"><span class="toc-number">4.3.</span> <span class="toc-text">Cookie</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Internet%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">Internet电子邮件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84"><span class="toc-number">5.1.</span> <span class="toc-text">电子邮件系统结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SMTP"><span class="toc-number">5.2.</span> <span class="toc-text">SMTP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E6%A0%BC%E5%BC%8F%E4%B8%8EMIME"><span class="toc-number">5.3.</span> <span class="toc-text">电子邮件格式与MIME</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%AE%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%8D%8F%E8%AE%AE"><span class="toc-number">5.4.</span> <span class="toc-text">邮件读取协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FTP-%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE"><span class="toc-number">6.</span> <span class="toc-text">FTP(文件传输协议)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#P2P%E5%BA%94%E7%94%A8"><span class="toc-number">7.</span> <span class="toc-text">P2P应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Socket%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80"><span class="toc-number">8.</span> <span class="toc-text">Socket编程基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">8.1.</span> <span class="toc-text">TCP服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP%E5%AE%A2%E6%88%B7"><span class="toc-number">8.2.</span> <span class="toc-text">TCP客户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UDP%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">8.3.</span> <span class="toc-text">UDP服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UDP%E5%AE%A2%E6%88%B7"><span class="toc-number">8.4.</span> <span class="toc-text">UDP客户</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/03/24/mermaid/" title="无题"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="无题"/></a><div class="content"><a class="title" href="/2021/03/24/mermaid/" title="无题">无题</a><time datetime="2021-03-24T06:42:07.328Z" title="发表于 2021-03-24 14:42:07">2021-03-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/15/IT/%E5%90%8E%E7%AB%AF/JAVA/03_%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" title="03_面向对象"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="03_面向对象"/></a><div class="content"><a class="title" href="/2021/03/15/IT/%E5%90%8E%E7%AB%AF/JAVA/03_%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" title="03_面向对象">03_面向对象</a><time datetime="2021-03-14T16:00:00.000Z" title="发表于 2021-03-15 00:00:00">2021-03-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/15/IT/%E5%90%8E%E7%AB%AF/JAVA/05_%E5%A4%9A%E7%BA%BF%E7%A8%8B/" title="05_多线程"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="05_多线程"/></a><div class="content"><a class="title" href="/2021/03/15/IT/%E5%90%8E%E7%AB%AF/JAVA/05_%E5%A4%9A%E7%BA%BF%E7%A8%8B/" title="05_多线程">05_多线程</a><time datetime="2021-03-14T16:00:00.000Z" title="发表于 2021-03-15 00:00:00">2021-03-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/15/IT/%E5%90%8E%E7%AB%AF/JAVA/04_%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" title="04_异常处理"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="04_异常处理"/></a><div class="content"><a class="title" href="/2021/03/15/IT/%E5%90%8E%E7%AB%AF/JAVA/04_%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" title="04_异常处理">04_异常处理</a><time datetime="2021-03-14T16:00:00.000Z" title="发表于 2021-03-15 00:00:00">2021-03-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/15/IT/%E5%90%8E%E7%AB%AF/JAVA/07_%E6%9E%9A%E4%B8%BE%E4%B8%8E%E6%B3%A8%E8%A7%A3/" title="07_枚举与注解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="07_枚举与注解"/></a><div class="content"><a class="title" href="/2021/03/15/IT/%E5%90%8E%E7%AB%AF/JAVA/07_%E6%9E%9A%E4%B8%BE%E4%B8%8E%E6%B3%A8%E8%A7%A3/" title="07_枚举与注解">07_枚举与注解</a><time datetime="2021-03-14T16:00:00.000Z" title="发表于 2021-03-15 00:00:00">2021-03-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 福生老爹</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
