@@ -1386,6 +1386,114 @@ public class NumberGuessTest {
 <!-- endtab -->
 {% endtabs %}
 
+### 注册
+自己百度叭
+
+### 闪退问题
+先不写了
+
+## 配置
+
+### jdk相关配置
+{% tabs jdk相关配置 %}
+<!-- tab 项目的jdk配置 -->
+`File-->Project Structure...-->Platform Settings -->SDKs`
+{% gallery %}
+![](04_13.png)
+![](04_14.png)
+{% endgallery %}
+- 注1：SDKs全称是Software Development Kit ，这里一定是选择JDK的安装根目录，不是JRE的目录。
+- 注2：这里还可以从本地添加多个JDK。使用“+”即可实现。
+<!-- endtab -->
+<!-- tab out目录和编译版本 -->
+`File-->Project Structure...-->Project Settings -->Project`
+{% gallery %}
+![](04_15.png)
+{% endgallery %}
+<!-- endtab -->
+{% endtabs %}
+
+### 详细配置
+
+{% tabs 详细配置 %}
+<!-- tab 打开详细配置 -->
+**1. 显示工具栏**
+{% gallery %}
+![](04_16.png)
+{% endgallery %}
+
+**2. 选择详细配置菜单或按钮**
+{% gallery %}
+![](04_17.png)
+![](04_18.png)
+{% endgallery %}
+<!-- endtab -->
+<!-- tab 系统设置 -->
+**1. 默认启动项目配置**
+> 启动IDEA时，默认自动打开上次开发的项目？还是自己选择？
+> {% gallery %}
+> ![](04_19.png)
+> {% endgallery %}
+> 如果去掉Reopen projects on startup前面的对勾，每次启动IDEA就会出现如下界面：
+> {% gallery %}
+> ![](04_20.png)
+> {% endgallery %}
+
+**2. 取消自动更新**
+> Settings-->Appearance & Behavior->System Settings -> Updates
+> 默认都打√了，建议检查IDE更新的√去掉，检查插件更新的√选上。
+> {% gallery %}
+> ![](04_21.png)
+> {% endgallery %}
+<!-- endtab -->
+
+<!-- tab 整体主题 -->
+**1. 选择主题**
+
+> {% gallery %}
+> ![](04_22.png)
+> {% endgallery %}
+
+**2. 设置菜单和窗口字体和大小**
+> {% gallery %}
+> ![](04_23.png)
+> {% endgallery %}
+
+**3. 设置IDEA背景图**
+> {% gallery %}
+> ![](04_24.png)
+> {% endgallery %}
+> 
+> 选择一张合适的图片作为背景，即可。
+> 
+> {% gallery %}
+> ![](04_25.png)
+> {% endgallery %}
+
+<!-- endtab -->
+<!-- tab 编辑器主题-->
+<!-- endtab -->
+<!-- tab 显示行号与方法分隔符 -->
+<!-- endtab -->
+<!-- tab 代码智能提示 -->
+<!-- endtab -->
+<!-- tab 自动导包 -->
+<!-- endtab -->
+<!-- tab 项目文件编码 -->
+<!-- endtab -->
+<!-- tab 控制台字符编码 -->
+<!-- endtab -->
+<!-- tab 类头的文档注释信息 -->
+<!-- endtab -->
+<!-- tab 自动编译 -->
+<!-- endtab -->
+<!-- tab 省电模式(忽略) -->
+<!-- endtab -->
+<!-- tab 取消双击shift搜索 -->
+<!-- endtab -->
+
+{% endtabs %}
+
 # 数组
 ## 数组的概念
 {% tabs 数组的概念 %}

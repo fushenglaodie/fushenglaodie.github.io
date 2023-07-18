@@ -20,9 +20,10 @@ nav:
   # About: /about/ || fas fa-heart
 menu:
   首页: / || fas fa-home
+  学科||fa fa-englise:
+    英语: /discipline/01_englise/
   核心基础||fa fa-heartbeat:
    Java基础: /core/01_JavaSE/
-   Java进阶: /core/01_JavaSE/
 
 # Code Blocks (代碼相關)
 # --------------------------------------
