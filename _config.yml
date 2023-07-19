@@ -104,6 +104,6 @@ theme: butterfly
 deploy:
   type: git
   repository: 
-    gitee: git@gitee.com:duanshiqi/blogs.git
     github: git@github.com:fushenglaodie/fushenglaodie.github.io.git
+    gitee: git@gitee.com:duanshiqi/blogs.git
   branch: master
