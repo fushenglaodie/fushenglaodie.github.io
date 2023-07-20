@@ -9,6 +9,17 @@ categories:
 - [X] 02_变量与运算符
 - [X] 03_流程控制
 - [ ] 04_IDEA开发工具
+- [ ] 04_数组
+- [ ] 05_面向对象
+- [ ] 06_异常处理
+- [ ] 07_多线程
+- [ ] 08_常用类和基础API
+- [ ] 09_集合框架
+- [ ] 10_泛型
+- [ ] 11_File类与IO流
+- [ ] 12_网络编程
+- [ ] 13_反射机制
+- [ ] 14_版本新特性
 
 
 # Java语言概述
@@ -1320,6 +1331,7 @@ public class NumberGuessTest {
 
 <!-- endtab -->
 {% endtabs %}
+---
 
 # 数组
 
@@ -1485,9 +1497,1341 @@ arr = new int[5];
 int[] arr = new int[5]{1,2,3,4,5};//错误的，后面有{}指定元素列表，就不需要在[]中指定元素个数了。
 ```
 <!-- endtab -->
-<!-- tab 数组的长度 -->
+<!-- tab 数组长度 -->
 > - 数组的元素总个数，即数组的长度
 > - 每个数组都有一个属性length指明它的长度，例如：arr.length 指明数组arr的长度(即元素个数)
 > - 每个数组都具有长度，而且一旦初始化，其长度就是确定，且是不可变的。
 <!-- endtab -->
+
+<!-- tab 数组元素引用 -->
+**如何表示数组中的一个元素？**
+> 每一个存储到数组的元素，都会自动的拥有一个编号，从0开始，这个自动编号称为`数组索引(index)或下标`，可以通过数组的索引/下标访问到数组中的元素。
+> ```java
+> 数组名[索引/下标]
+> ```
+
+**数组的下标范围**
+> Java中数组的下标从[0]开始，下标范围是[0, 数组的长度-1]，即[0, 数组名.length-1]
+> 数组元素下标可以是整型常量或整型表达式。如a[3] , b[i] , c[6*i];
+
+**例子**
+```java
+public class ArrayTest3 {
+    public static void main(String[] args) {
+        int[] arr = {1,2,3,4,5};
+
+        System.out.println("arr数组的长度：" + arr.length);
+        System.out.println("arr数组的第1个元素：" + arr[0]);//下标从0开始
+        System.out.println("arr数组的第2个元素：" + arr[1]);
+        System.out.println("arr数组的第3个元素：" + arr[2]);
+        System.out.println("arr数组的第4个元素：" + arr[3]);
+        System.out.println("arr数组的第5个元素：" + arr[4]);
+
+        //修改第1个元素的值
+        //此处arr[0]相当于一个int类型的变量
+        arr[0] = 100;
+        System.out.println("arr数组的第1个元素：" + arr[0]);
+    }
+}
+```
+<!-- endtab -->
+<!-- tab 一维数组的遍历 -->
+> 将数组中的每个元素分别获取出来，就是`遍历`。for循环与数组的遍历是绝配。
+**例子1**
+```java
+public class ArrayTest4 {
+    public static void main(String[] args) {
+        int[] arr = new int[]{1,2,3,4,5};
+        //打印数组的属性，输出结果是5
+        System.out.println("数组的长度：" + arr.length);
+
+        //遍历输出数组中的元素
+        System.out.println("数组的元素有：");
+        for(int i=0; i<arr.length; i++){
+            System.out.println(arr[i]);
+        }
+    }
+}
+```
+**例子2**
+```java
+public class ArrayTest5 {
+    public static void main(String[] args) {
+        int[] arr = new int[5];
+
+        System.out.println("arr数组的长度：" + arr.length);
+        System.out.print("存储数据到arr数组之前：[");
+        for (int i = 0; i < arr.length; i++) {
+            if(i==0){
+                System.out.print(arr[i]);
+            }else{
+                System.out.print("," + arr[i]);
+            }
+        }
+        System.out.println("]");
+
+        //初始化
+ 		/* 
+ 		arr[0] = 2;
+        arr[1] = 4;
+        arr[2] = 6;
+        arr[3] = 8;
+        arr[4] = 10;
+        */
+
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = (i+1) * 2;
+        }
+
+        System.out.print("存储数据到arr数组之后：[");
+        for (int i = 0; i < arr.length; i++) {
+            if(i==0){
+                System.out.print(arr[i]);
+            }else{
+                System.out.print("," + arr[i]);
+            }
+        }
+        System.out.println("]");
+    }
+}
+```
+<!-- endtab -->
+<!-- tab 数组元素的默认值 -->
+> 数组是引用类型，当我们使用动态初始化方式创建数组时，元素值只是默认值。例如：
+```java
+public class ArrayTest6 {
+	public static void main(String argv[]){
+		int a[]= new int[5]; 
+		System.out.println(a[3]); //a[3]的默认值为0
+	}
+} 
+```
+> 对于基本数据类型而言，默认初始化值各有不同。
+> 对于引用数据类型而言，默认初始化值为null（注意与0不同！）
+{% gallery %}
+![](05_01.png)
+{% endgallery %}
+
+**实例**
+```java
+public class ArrayTest7 {
+    public static void main(String[] args) {
+        //存储26个字母
+        char[] letters = new char[26];
+        System.out.println("letters数组的长度：" + letters.length);
+        System.out.print("存储字母到letters数组之前：[");
+        for (int i = 0; i < letters.length; i++) {
+            if(i==0){
+                System.out.print(letters[i]);
+            }else{
+                System.out.print("," + letters[i]);
+            }
+        }
+        System.out.println("]");
+
+       //存储5个姓名
+        String[] names = new String[5];
+        System.out.println("names数组的长度：" + names.length);
+        System.out.print("存储姓名到names数组之前：[");
+        for (int i = 0; i < names.length; i++) {
+            if(i==0){
+                System.out.print(names[i]);
+            }else{
+                System.out.print("," + names[i]);
+            }
+        }
+        System.out.println("]");
+    }
+}
+```
+<!-- endtab -->
 {% endtabs %}
+
+## 一维数组内存分析
+
+{% tabs 一维数组内存分析 %}
+<!-- tab Java虚拟机的内存划分 -->
+> 为了提高运算效率，就对空间进行了不同区域的划分，因为每一片区域都有特定的处理数据方式和内存管理方式。
+> {% gallery %}
+> ![](05_02.png)
+> {% endgallery %}
+> 
+> | 区域名称   | 作用                                                      |
+> | ----------| ---------------------------------------------------------|
+> | `虚拟机栈` | 用于存储正在执行的每个Java方法的局部变量表等。局部变量表存放了编译期可知长度<br/>的各种基本数据类型、对象引用，方法执行完，自动释放。 |
+> | `堆内存` | 存储对象（包括数组对象），new来创建的，都存储在堆内存。 |
+> | `方法区` | 存储已被虚拟机加载的类信息、常量、（静态变量）、即时编译器编译后的代码等数据。 |
+> | 本地方法栈 | 当程序中调用了native的本地方法时，本地方法执行期间的内存区域 |
+> | 程序计数器 | 程序计数器是CPU中的寄存器，它包含每一个线程下一条要执行的指令的地址 |
+
+<!-- endtab -->
+<!-- tab 一维数组内存分析 -->
+**一个一维数组的内存图**
+```java
+public static void main(String[] args) {
+  	int[] arr = new int[3];
+  	System.out.println(arr);//[I@5f150435
+}
+
+```
+{% gallery %}
+![](05_03.png)
+{% endgallery %}
+
+**数组下标0开始的原因**
+
+> 因为第一个元素距离数组首地址间隔0个单元格。
+
+**两个一维数组内存图**
+
+```java
+//两个数组独立
+public static void main(String[] args) {
+    int[] arr = new int[3];
+    int[] arr2 = new int[2];
+    System.out.println(arr);
+    System.out.println(arr2);
+}
+
+```
+{% gallery %}
+![](05_04.png)
+{% endgallery %}
+
+**两个变量指向同一个一维数组**
+
+> 两个数组变量本质上代表同一个数组。
+
+```java
+public static void main(String[] args) {
+    // 定义数组，存储3个元素
+    int[] arr = new int[3];
+    //数组索引进行赋值
+    arr[0] = 5;
+    arr[1] = 6;
+    arr[2] = 7;
+    //输出3个索引上的元素值
+    System.out.println(arr[0]);
+    System.out.println(arr[1]);
+    System.out.println(arr[2]);
+    //定义数组变量arr2，将arr的地址赋值给arr2
+    int[] arr2 = arr;
+    arr2[1] = 9;
+    System.out.println(arr[1]);
+}
+```
+{% gallery %}
+![](05_05.png)
+{% endgallery %}
+<!-- endtab -->
+
+{% endtabs %}
+
+## 一维数组的应用
+
+{% tabs 一维数组的应用 %}
+
+<!-- tab 案例1 -->
+> 升景坊单间短期出租4个月，550元/月（水电煤公摊，网费35元/月），空调、卫生间、厨房齐全。屋内均是IT行业人士，喜欢安静。所以要求来租者最好是同行或者刚毕业的年轻人，爱干净、安静。
+> 
+```java
+public class ArrayTest {
+      public static void main(String[] args) {
+      int[] arr = new int[]{8,2,1,0,3};
+      int[] index = new int[]{2,0,3,2,4,0,1,3,2,3,3};
+      String tel = "";
+      for(int i = 0;i < index.length;i++){
+            tel += arr[index[i]];
+      }
+      System.out.println("联系方式：" + tel);
+      }
+}
+```
+<!-- endtab -->
+
+<!-- tab 案例2 -->
+
+> 用一个数组，保存星期一到星期天的7个英语单词，从 键盘输入1-7，显示对应的单词
+{"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"}
+
+```java
+import java.util.Scanner;
+
+/**
+ * @author 尚硅谷-宋红康
+ * @create 14:37
+ */
+public class WeekArrayTest {
+    public static void main(String[] args) {
+
+        //1. 声明并初始化星期的数组
+        String[] weeks = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
+
+        //2. 使用Scanner从键盘获取1-7范围的整数
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入[1-7]范围的整数：");
+        int number = scanner.nextInt();
+
+        if(number < 1 || number > 7){
+            System.out.println("你输入的输入非法");
+        }else{
+
+            //3. 根据输入的整数，到数组中相应的索引位置获取指定的元素（即：星期几）
+            System.out.println("对应的星期为：" + weeks[number - 1]);
+
+        }
+        
+        scanner.close();
+
+    }
+}
+```
+
+<!-- endtab -->
+
+<!-- tab 案例3 -->
+> 从键盘读入学生成绩，找出最高分，并输出学生成绩等级。
+> - 成绩>=最高分-10  等级为’A’  
+> - 成绩>=最高分-20  等级为’B’
+> - 成绩>=最高分-30  等级为’C’  
+> - 其余            等级为’D’
+> 提示：先读入学生人数，根据人数创建int数组，存放学生成绩。
+>
+> {% gallery %}
+> ![](05_06.png)
+> {% endgallery %}
+
+```java
+/**
+ * @author 尚硅谷-宋红康
+ * @create 14:55
+ */
+public class ScoreTest1 {
+    public static void main(String[] args) {
+
+        //1. 根据提示，获取学生人数
+        System.out.print("请输入学生人数：");
+        Scanner scanner = new Scanner(System.in);
+        int count = scanner.nextInt();
+
+        //2. 根据学生人数，创建指定长度的数组 (使用动态初始化)
+        int[] scores = new int[count];
+
+        //3. 使用循环，依次给数组的元素赋值
+        int maxScore = 0; //记录最高分
+        System.out.println("请输入" + count + "个成绩");
+        for (int i = 0; i < scores.length; i++) {
+            scores[i] = scanner.nextInt();
+            //4. 获取数组中元素的最大值，即为最高分
+            if(maxScore < scores[i]){
+                maxScore = scores[i];
+            }
+        }
+
+        System.out.println("最高分是：" + maxScore);
+
+        //5. 遍历数组元素，输出各自的分数，并根据其分数与最高分的差值，获取各自的等级
+        char grade;
+        for (int i = 0; i < scores.length; i++) {
+
+            if(scores[i] >= maxScore - 10){
+                grade = 'A';
+            }else if(scores[i] >= maxScore - 20){
+                grade = 'B';
+            }else if(scores[i] >= maxScore - 30){
+                grade = 'C';
+            }else{
+                grade = 'D';
+            }
+            System.out.println("student " + i + " socre is " + scores[i] + ", grade is " + grade);
+        }
+        //关闭资源
+        scanner.close();
+
+    }
+}
+```
+
+<!-- endtab -->
+
+{% endtabs %}
+
+
+## 多维数组的使用
+
+{% tabs %}
+
+<!-- tab 概述 -->
+> - Java 语言里提供了支持多维数组的语法。
+> - 如果说可以把一维数组当成几何中的`线性图形`，那么二维数组就相当于是`一个表格`，像Excel中的表格、围棋棋盘一样。
+> {% gallery %}
+> ![](05_07.png)
+> {% endgallery %}
+
+**举例1**
+> 某公司2022年全年各个月份的销售额进行登记。按月份存储，可以使用一维数组。如下：
+```java
+int[] monthData = new int[]{23,43,22,34,55,65,44,67,45,78,67,66};
+```
+> 如果改写为按`季度`为单位存储怎么办呢？
+```java
+int[][] quarterData = new int[][]{{23,43,22},{34,55,65},{44,67,45},{78,67,66}};
+``` 
+
+**举例2**
+> 高一年级三个班级均由多个学生姓名构成一个个数组。如下：
+
+```java
+String[] class1 = new String[]{"段誉","令狐冲","任我行"};
+
+String[] class2 = new String[]{"张三丰","周芷若"};
+
+String[] class3 = new String[]{"赵敏","张无忌","韦小宝","杨过"};
+
+```
+
+> 那从整个年级看，我们可以声明一个二维数组。如下：
+
+```java
+String[][] grade = new String[][]{{"段誉","令狐冲","任我行"},{"张三丰","周芷若"},{"赵敏","张无忌","韦小宝","杨过"}};
+```
+
+**举例3**
+
+> {% gallery %}
+> ![](05_09.png)
+> {% endgallery %}
+> 
+> 蓝框的几个元素，可以使用一维数组来存储。但现在发现每个元素下还有下拉框，其内部还有元素，那就需要使用二维数组来存储：
+> 
+> {% gallery %}
+> ![](05_10.png)
+> {% endgallery %}
+> 使用说明
+> 
+> {% gallery %}
+> ![](05_11.png)
+> {% endgallery %}
+> 
+> - 对于二维数组的理解，可以看成是一维数组array1又作为另一个一维数组array2的元素而存在。
+> - 其实，从数组底层的运行机制来看，其实没有多维数组。
+<!-- endtab -->
+<!-- tab 声明 -->
+**二维数组声明的语法格式**
+```java
+//推荐
+元素的数据类型[][] 二维数组的名称;
+
+//不推荐
+元素的数据类型  二维数组名[][];
+//不推荐
+元素的数据类型[]  二维数组名[];
+```
+**例子**
+```java
+public class Test20TwoDimensionalArrayDefine {
+    public static void main(String[] args) {
+        //存储多组成绩
+        int[][] grades;
+
+        //存储多组姓名
+        String[][] names;
+    }
+}
+```
+**面试**
+```java
+int[] x, y[];
+//x是一维数组，y是二维数组
+```
+<!-- endtab -->
+
+<!-- tab 静态初始化 -->
+**格式**
+```java
+int[][] arr = new int[][]{{3,8,2},{2,7},{9,0,1,6}};
+```
+> 定义一个名称为arr的二维数组，二维数组中有三个一维数组
+> 
+> - 每一个一维数组中具体元素也都已初始化
+>   - 第一个一维数组 arr[0] = {3,8,2};
+>   - 第二个一维数组 arr[1] = {2,7};
+>   - 第三个一维数组 arr[2] = {9,0,1,6};
+> - 第三个一维数组的长度表示方式：arr[2].length;
+> 
+> > - 注意特殊写法情况：int[] x,y[]; x是一维数组，y是二维数组。
+
+**例子1**
+```java
+int[][] arr = {{1,2,3},{4,5,6},{7,8,9,10}};//声明与初始化必须在一句完成
+
+int[][] arr = new int[][]{{1,2,3},{4,5,6},{7,8,9,10}};
+
+int[][] arr;
+arr = new int[][]{{1,2,3},{4,5,6},{7,8,9,10}};
+
+arr = new int[3][3]{{1,2,3},{4,5,6},{7,8,9,10}};//错误，静态初始化右边new 数据类型[][]中不能写数字
+```
+
+**例子2**
+```java
+public class TwoDimensionalArrayInitialize {
+    public static void main(String[] args) {
+        //存储多组成绩
+        int[][] grades = {
+                    {89,75,99,100},
+                    {88,96,78,63,100,86},
+                    {56,63,58},
+                    {99,66,77,88}
+                };
+
+        //存储多组姓名
+        String[][] names = {
+            {"张三","李四", "王五", "赵六"},
+            {"刘备","关羽","张飞","诸葛亮","赵云","马超"},
+            {"曹丕","曹植","曹冲"},
+            {"孙权","周瑜","鲁肃","黄盖"}
+        };
+    }
+}
+```
+<!-- endtab -->
+<!-- tab 动态初始化 -->
+> 如果二维数组的每一个数据，甚至是每一行的列数，需要后期单独确定，那么就只能使用动态初始化方式了。动态初始化方式分为两种格式：
+**格式1：规则二维表：每一行的列数是相同的**
+```java
+//（1）确定行数和列数
+元素的数据类型[][] 二维数组名 = new 元素的数据类型[m][n];
+	//其中，m:表示这个二维数组有多少个一维数组。或者说一共二维表有几行
+	//其中，n:表示每一个一维数组的元素有多少个。或者说每一行共有一个单元格
+
+//此时创建完数组，行数、列数确定，而且元素也都有默认值
+
+//（2）再为元素赋新值
+二维数组名[行下标][列下标] = 值;
+```
+
+**例子**
+
+```java
+int[][] arr = new int[3][2];
+```
+> -  定义了名称为arr的二维数组
+> -  二维数组中有3个一维数组
+> -  每一个一维数组中有2个元素
+> -  一维数组的名称分别为arr[0], arr[1], arr[2]
+> -  给第一个一维数组1脚标位赋值为78写法是：`arr[0][1] = 78;`
+
+**格式2：不规则：每一行的列数不一样**
+
+```java
+//（1）先确定总行数
+元素的数据类型[][] 二维数组名 = new 元素的数据类型[总行数][];
+
+//此时只是确定了总行数，每一行里面现在是null
+
+//（2）再确定每一行的列数，创建每一行的一维数组
+二维数组名[行下标] = new 元素的数据类型[该行的总列数];
+
+//此时已经new完的行的元素就有默认值了，没有new的行还是null
+
+//(3)再为元素赋值
+二维数组名[行下标][列下标] = 值;
+```
+
+**例子**
+
+```java
+int[][] arr = new int[3][];
+```
+
+> -  二维数组中有3个一维数组。
+> -  每个一维数组都是默认初始化值null (注意：区别于格式1）
+> -  可以对这个三个一维数组分别进行初始化：arr[0] = new int[3];    arr[1] = new int[1];   arr[2] = new int[2];
+> -  注：`int[][]arr = new int[][3]; ` //非法
+
+**练习**
+```java
+/*
+ 1
+ 2 2
+ 3 3 3
+ 4 4 4 4
+ 5 5 5 5 5
+ */
+public class Test25DifferentElementCount {
+    public static void main(String[] args){
+        //1、声明一个二维数组，并且确定行数
+        //因为每一行的列数不同，这里无法直接确定列数
+        int[][]  arr = new int[5][];
+
+        //2、确定每一行的列数
+        for(int i=0; i<arr.length; i++){
+			/*
+			arr[0] 的列数是1
+			arr[1] 的列数是2
+			arr[2] 的列数是3
+			arr[3] 的列数是4
+			arr[4] 的列数是5
+			*/
+            arr[i] = new int[i+1];
+        }
+
+        //3、确定元素的值
+        for(int i=0; i<arr.length; i++){
+            for(int j=0; j<arr[i].length; j++){
+                arr[i][j] = i+1;
+            }
+        }
+
+        //4、遍历显示
+        for(int i=0; i<arr.length; i++){
+            for(int j=0; j<arr[i].length; j++){
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+    }
+}
+```
+
+<!-- endtab -->
+
+<!-- tab 数列长度和角标-->
+> - 二维数组的长度/行数：二维数组名.length
+> - 二维数组的某一行：二维数组名[行下标]，此时相当于获取其中一组数据。它本质上是一个一维数组。行下标的范围：[0, 二维数组名.length-1]。此时把二维数组看成一维数组的话，元素是行对象。
+> - 某一行的列数：二维数组名[行下标].length，因为二维数组的每一行是一个一维数组。
+> - 某一个元素：二维数组名\[行下标\]\[列下标\]，即先确定行/组，再确定列。
+```java
+public class Test22TwoDimensionalArrayUse {
+    public static void main(String[] args){
+        //存储3个小组的学员的成绩，分开存储，使用二维数组。
+		/*
+		int[][] scores1;
+		int scores2[][];
+		int[] scores3[];*/
+
+        int[][] scores = {
+                {85,96,85,75},
+                {99,96,74,72,75},
+                {52,42,56,75}
+        };
+
+        System.out.println(scores);//[[I@15db9742
+        System.out.println("一共有" + scores.length +"组成绩.");
+
+        //[[：代表二维数组，I代表元素类型是int
+        System.out.println(scores[0]);//[I@6d06d69c
+        //[：代表一维数组，I代表元素类型是int
+        System.out.println(scores[1]);//[I@7852e922
+        System.out.println(scores[2]);//[I@4e25154f
+        //System.out.println(scores[3]);//ArrayIndexOutOfBoundsException: 3
+
+        System.out.println("第1组有" + scores[0].length +"个学员.");
+        System.out.println("第2组有" + scores[1].length +"个学员.");
+        System.out.println("第3组有" + scores[2].length +"个学员.");
+
+        System.out.println("第1组的每一个学员成绩如下：");
+        //第一行的元素
+        System.out.println(scores[0][0]);//85
+        System.out.println(scores[0][1]);//96
+        System.out.println(scores[0][2]);//85
+        System.out.println(scores[0][3]);//75
+        //System.out.println(scores[0][4]);//java.lang.ArrayIndexOutOfBoundsException: 4
+    }
+}
+```
+<!-- endtab -->
+
+<!-- tab 二维数组遍历 -->
+**格式**
+```java
+for(int i=0; i<二维数组名.length; i++){ //二维数组对象.length
+    for(int j=0; j<二维数组名[i].length; j++){//二维数组行对象.length
+        System.out.print(二维数组名[i][j]);
+    }
+    System.out.println();
+}
+```
+**举例**
+```java
+public class Test23TwoDimensionalArrayIterate {
+    public static void main(String[] args) {
+        //存储3个小组的学员的成绩，分开存储，使用二维数组。
+        int[][] scores = {
+                {85,96,85,75},
+                {99,96,74,72,75},
+                {52,42,56,75}
+        };
+
+        System.out.println("一共有" + scores.length +"组成绩.");
+        for (int i = 0; i < scores.length; i++) {
+            System.out.print("第" + (i+1) +"组有" + scores[i].length + "个学员，成绩如下：");
+            for (int j = 0; j < scores[i].length; j++) {
+                System.out.print(scores[i][j]+"\t");
+            }
+            System.out.println();
+        }
+    }
+}
+```
+<!-- endtab -->
+
+<!-- tab 内存解析 -->
+> 二维数组本质上是元素类型是一维数组的一维数组。
+
+```java
+int[][] arr = {
+    {1},
+    {2,2},
+    {3,3,3},
+    {4,4,4,4},
+    {5,5,5,5,5}
+};
+```
+
+{% asset_img 05_12.png %}
+
+```java
+//1、声明二维数组，并确定行数和列数
+int[][] arr = new int[4][5];
+
+//2、确定元素的值
+for (int i = 0; i < arr.length; i++) {
+    for (int j = 0; j < arr.length; j++) {
+        arr[i][j] = i + 1;
+    }
+}
+```
+
+{% asset_img 05_13.png %}
+
+```java
+//1、声明一个二维数组，并且确定行数
+//因为每一行的列数不同，这里无法直接确定列数
+int[][]  arr = new int[5][];
+
+//2、确定每一行的列数
+for(int i=0; i<arr.length; i++){
+    /*
+			arr[0] 的列数是1
+			arr[1] 的列数是2
+			arr[2] 的列数是3
+			arr[3] 的列数是4
+			arr[4] 的列数是5
+			*/
+    arr[i] = new int[i+1];
+}
+
+//3、确定元素的值
+for(int i=0; i<arr.length; i++){
+    for(int j=0; j<arr[i].length; j++){
+        arr[i][j] = i+1;
+    }
+}
+```
+
+{% asset_img 05_14.png %}
+
+<!-- endtab -->
+
+<!-- tab 应用举例 -->
+**案例1**:获取arr数组中所有元素的和。
+> 提示：使用for的嵌套循环即可。
+{% asset_img 05_15.png %}
+
+**案例2**:声明：int[] x,y[]; 在给x,y变量赋值以后，以下选项允许通过编译的是： 
+```java
+声明：int[] x,y[]; 在给x,y变量赋值以后，以下选项允许通过编译的是：
+a)    x[0] = y;                 //no
+b)    y[0] = x;                 //yes
+c)    y[0][0] = x;              //no
+d)    x[0][0] = y;              //no
+e)    y[0][0] = x[0];           //yes
+f)    x = y;                    //no
+
+提示：
+一维数组：int[] x  或者int x[]   
+二维数组：int[][] y 或者  int[] y[]  或者 int  y[][]
+
+```
+
+**案例3**:使用二维数组打印一个 10 行杨辉三角。
+> 提示：
+> 1. 第一行有 1 个元素, 第 n 行有 n 个元素
+> 2. 每一行的第一个元素和最后一个元素都是 1
+> 3. 从第三行开始, 对于非第一个元素和最后一个元素的元素。即：
+> ```java
+> yanghui[i][j] = yanghui[i-1][j-1] + yanghui[i-1][j];
+> ```
+
+{% asset_img 05_16.png%}
+
+```java
+/**
+ * @author 尚硅谷-宋红康
+ * @create 10:11
+ */
+public class YangHuiTest {
+    public static void main(String[] args) {
+
+        //1. 动态初始化的方式创建二维数组
+        int[][] yangHui = new int[10][];
+
+        for (int i = 0; i < yangHui.length; i++) {
+            yangHui[i] = new int[i + 1];
+
+            //2. 给数组元素赋值
+            // 2.1 给外层数组元素中的首元素和末元素赋值
+            yangHui[i][0] = yangHui[i][i] = 1;
+
+            //2.2 给外层数组元素中的非首元素和非末元素赋值（难）
+            //if(i > 1){ //从 i == 2 开始执行
+                for(int j = 1;j < yangHui[i].length - 1;j++){ //非首元素和非末元素的角标范围
+                    yangHui[i][j] = yangHui[i-1][j-1] + yangHui[i-1][j];
+
+                }
+            //}
+        }
+
+
+
+        //3. 遍历二维数组
+        for (int i = 0; i < yangHui.length; i++) {
+            for (int j = 0; j < yangHui[i].length; j++) {
+                System.out.print(yangHui[i][j] + "\t");
+            }
+
+            System.out.println();
+        }
+
+    }
+}
+```
+<!-- endtab -->
+
+{% endtabs %}
+
+## 数组的常见算法
+
+{% tabs 数组常见算法 %}
+
+<!-- tab 数值型数组特征值统计 -->
+> 这里的特征值涉及到：平均值、最大值、最小值、总和等
+
+**举例1：**数组统计：求总和、均值
+
+```java
+public class TestArrayElementSum {
+    public static void main(String[] args) {
+        int[] arr = {4,5,6,1,9};
+        //求总和、均值
+        int sum = 0;//因为0加上任何数都不影响结果
+        for(int i=0; i<arr.length; i++){
+            sum += arr[i];
+        }
+        double avg = (double)sum/arr.length;
+
+        System.out.println("sum = " + sum);
+        System.out.println("avg = " + avg);
+    }
+}
+```
+
+**举例2：**求数组元素的总乘积
+```java
+public class TestArrayElementMul {
+    public static void main(String[] args) {
+        int[] arr = {4,5,6,1,9};
+
+        //求总乘积
+        long result = 1;//因为1乘以任何数都不影响结果
+        for(int i=0; i<arr.length; i++){
+            result *= arr[i];
+        }
+
+        System.out.println("result = " + result);
+    }
+}
+```
+
+**举例3：**求数组元素中偶数的个数
+```java
+public class TestArrayElementEvenCount {
+    public static void main(String[] args) {
+        int[] arr = {4,5,6,1,9};
+        //统计偶数个数
+        int evenCount = 0;
+        for(int i=0; i<arr.length; i++){
+            if(arr[i]%2==0){
+                evenCount++;
+            }
+        }
+
+        System.out.println("evenCount = " + evenCount);
+    }
+}
+```
+
+**举例4：**求数组元素的最大值
+> 一楼到十楼的每层电梯门口都放着一颗钻石，钻石大小不一，你乘坐电梯从一楼到十楼，每层电梯都会打开一次，手里只能拿一颗钻石，问怎样才能拿到最大的一颗？
+
+```java
+public class TestArrayMax {
+    public static void main(String[] args) {
+        int[] arr = {4,5,6,1,9};
+        //找最大值
+        int max = arr[0];
+        for(int i=1; i<arr.length; i++){//此处i从1开始，是max不需要与arr[0]再比较一次了
+            if(arr[i] > max){
+                max = arr[i];
+            }
+        }
+
+        System.out.println("max = " + max);
+    }
+}
+```
+
+**举例5：**找最值及其第一次出现的下标
+
+```java
+public class TestMaxIndex {
+    public static void main(String[] args) {
+        int[] arr = {4,5,6,1,9};
+        //找最大值以及第一个最大值下标
+        int max = arr[0];
+        int index = 0;
+        for(int i=1; i<arr.length; i++){
+            if(arr[i] > max){
+                max = arr[i];
+                index = i;
+            }
+        }
+
+        System.out.println("max = " + max);
+        System.out.println("index = " + index);
+    }
+}
+```
+
+**举例6：**找最值及其所有最值的下标
+
+```java
+public class Test13AllMaxIndex {
+    public static void main(String[] args) {
+        int[] arr = {4,5,6,1,9,9,3};
+        //找最大值
+        int max = arr[0];
+        for(int i=1; i<arr.length; i++){
+            if(arr[i] > max){
+                max = arr[i];
+            }
+        }
+        System.out.println("最大值是：" + max);
+        System.out.print("最大值的下标有：");
+
+        //遍历数组，看哪些元素和最大值是一样的
+        for(int i=0; i<arr.length; i++){
+            if(max == arr[i]){
+                System.out.print(i+"\t");
+            }
+        }
+        System.out.println();
+    }
+}
+```
+
+优化
+
+```java
+public class Test13AllMaxIndex2 {
+    public static void main(String[] args) {
+        int[] arr = {4,5,6,1,9,9,3};
+        //找最大值
+        int max = arr[0];
+        String index = "0";
+        for(int i=1; i<arr.length; i++){
+            if(arr[i] > max){
+                max = arr[i];
+                index = i + "";
+            }else if(arr[i] == max){
+                index += "," + i;
+            }
+        }
+
+        System.out.println("最大值是" + max);
+        System.out.println("最大值的下标是[" + index+"]");
+    }
+}
+```
+
+**举例7(难)：**输入一个整形数组，数组里有正数也有负数。数组中连续的一个或多个整数组成一个子数组，每个子数组都有一个和。求所有子数组的和的最大值。要求时间复杂度为O(n)。
+例如：输入的数组为1, -2, 3, -10, -4, 7, 2, -5，和最大的子数组为3, 10, -4, 7, 2，因此输出为该子数组的和18。
+
+```java
+public class Test5 {
+	public static void main(String[] args) {
+		int[] arr = new int[]{1, -2, 3, 10, -4, 7, 2, -5};
+		int i = getGreatestSum(arr);
+		System.out.println(i);
+	}
+	
+	public static int getGreatestSum(int[] arr){
+		int greatestSum = 0;
+		if(arr == null || arr.length == 0){
+			return 0;
+		}
+		int temp = greatestSum;
+		for(int i = 0;i < arr.length;i++){
+			temp += arr[i];
+			
+			if(temp < 0){
+				temp = 0;
+			}
+			
+			if(temp > greatestSum){
+				greatestSum = temp;
+			}
+		}
+		if(greatestSum == 0){
+			greatestSum = arr[0];
+			for(int i = 1;i < arr.length;i++){
+				if(greatestSum < arr[i]){
+					greatestSum = arr[i];
+				}
+			}
+		}
+		return greatestSum;
+	}
+}
+```
+
+**举例8：评委打分**
+
+分析以下需求，并用代码实现：
+
+（1）在编程竞赛中，有10位评委为参赛的选手打分，分数分别为：5，4，6，8，9，0，1，2，7，3
+
+（2）求选手的最后得分（去掉一个最高分和一个最低分后其余8位评委打分的平均值）
+
+```java
+/**
+ * @author 尚硅谷-宋红康
+ * @create 10:03
+ */
+public class ArrayExer {
+    public static void main(String[] args) {
+        int[] scores = {5,4,6,8,9,0,1,2,7,3};
+
+        int max = scores[0];
+        int min = scores[0];
+        int sum = 0;
+        for(int i = 0;i < scores.length;i++){
+            if(max < scores[i]){
+                max = scores[i];
+            }
+
+            if(min > scores[i]){
+                min = scores[i];
+            }
+
+            sum += scores[i];
+        }
+
+        double avg = (double)(sum - max - min) / (scores.length - 2);
+
+        System.out.println("选手去掉最高分和最低分之后的平均分为：" + avg);
+    }
+}
+```
+
+<!-- endtab -->
+<!-- tab 数组元素的赋值与数组复制 -->
+**举例1：**杨辉三角（见二维数组课后案例）
+**举例2：**使用简单数组
+
+> (1)创建一个名为ArrayTest的类，在main()方法中声明array1和array2两个变量，他们是int[]类型的数组。
+> 
+> (2)使用大括号{}，把array1初始化为8个素数：2,3,5,7,11,13,17,19。
+> 
+> (3)显示array1的内容。
+> 
+> (4)赋值array2变量等于array1，修改array2中的偶索引元素，使其等于索引值(如array[0]=0,array[2]=2)。打印出array1。  array2 = array1;
+> 
+> > **思考：**array1和array2是什么关系？
+> >
+> > **拓展：**修改题目，实现array2对array1数组的复制
+
+{% gallery %}
+![](05_17.png)
+![](05_18.png)
+{% endgallery %}
+
+**举例3：**一个数组，让数组的每个元素去除第一个元素，得到的商作为被除数所在位置的新值。
+
+```java
+public class Test3 {
+	public static void main(String[] args) {
+		int[] arr = new int[]{12,43,65,3,-8,64,2};
+		
+//		for(int i = 0;i < arr.length;i++){
+//			arr[i] = arr[i] / arr[0];
+//		}
+		for(int i = arr.length -1;i >= 0;i--){
+			arr[i] = arr[i] / arr[0];
+		}
+		//遍历arr
+		for(int i = 0;i < arr.length;i++){
+			System.out.print(arr[i] + " ");
+		}
+	}
+}
+```
+
+**举例4：**创建一个长度为6的int型数组，要求数组元素的值都在1-30之间，且是随机赋值。同时，要求元素的值各不相同。 
+
+```java
+public class Test4 {
+	// 5-67 Math.random() * 63 + 5;
+	@Test
+	public void test1() {
+		int[] arr = new int[6];
+		for (int i = 0; i < arr.length; i++) {// [0,1) [0,30) [1,31)
+			arr[i] = (int) (Math.random() * 30) + 1;
+
+			boolean flag = false;
+			while (true) {
+				for (int j = 0; j < i; j++) {
+					if (arr[i] == arr[j]) {
+						flag = true;
+						break;
+					}
+				}
+				if (flag) {
+					arr[i] = (int) (Math.random() * 30) + 1;
+					flag = false;
+					continue;
+				}
+				break;
+			}
+		}
+
+		for (int i = 0; i < arr.length; i++) {
+			System.out.println(arr[i]);
+		}
+	}
+	//更优的方法
+	@Test
+	public void test2(){
+		int[] arr = new int[6];
+		for (int i = 0; i < arr.length; i++) {// [0,1) [0,30) [1,31)
+			arr[i] = (int) (Math.random() * 30) + 1;
+			
+				for (int j = 0; j < i; j++) {
+					if (arr[i] == arr[j]) {
+						i--;
+						break;
+					}
+				}
+			}
+
+		for (int i = 0; i < arr.length; i++) {
+			System.out.println(arr[i]);
+		}
+	}
+}
+```
+
+**举例5：**扑克牌
+> 案例：遍历扑克牌
+> 遍历扑克牌，效果如图所示：
+> {% asset_img 05_19.png %}
+> 提示：使用两个字符串数组，分别保存花色和点数，再用一个字符串数组保存最后的扑克牌。
+> ```java
+> String[] hua = {"黑桃","红桃","梅花","方片"};
+> String[] dian = {"A","2","3","4","5","6","7","8","9","10","J","Q","K"};
+> ```
+```java 
+package com.atguigu3.common_algorithm.exer5;
+
+/**
+ * @author 尚硅谷-宋红康
+ * @create 17:16
+ */
+public class ArrayExer05 {
+    public static void main(String[] args) {
+        String[] hua = {"黑桃","红桃","梅花","方片"};
+        String[] dian = {"A","2","3","4","5","6","7","8","9","10","J","Q","K"};
+
+
+        String[] pai = new String[hua.length * dian.length];
+        int k = 0;
+        for(int i = 0;i < hua.length;i++){
+            for(int j = 0;j < dian.length;j++){
+                pai[k++] = hua[i] + dian[j];
+            }
+        }
+
+        for (int i = 0; i < pai.length; i++) {
+            System.out.print(pai[i] + "  ");
+            if(i % 13 == 12){
+                System.out.println();
+            }
+        }
+
+    }
+}
+```
+> 拓展：在上述基础上，增加大王、小王。
+
+**举例6：**回形数
+> 从键盘输入一个整数（1~20） ，则以该数字为矩阵的大小，把1,2,3…n*n 的数字按照顺时针螺旋的形式填入其中。
+> 
+> 例如： 输入数字2，则程序输出： 
+> 1 2 
+> 4 3 
+> 
+> 输入数字3，则程序输出： 
+> 1 2 3 
+> 8 9 4 
+> 7 6 5 
+> 输入数字4， 则程序输出： 
+> 1    2    3    4 
+> 12  13  14  5 
+> 11  16  15  6 
+> 10   9   8    7
+
+方式1:
+```java
+//方式1
+public class RectangleTest {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("输入一个数字");
+		int len = scanner.nextInt();
+		int[][] arr = new int[len][len];
+		
+		int s = len * len;
+		/*
+		 * k = 1:向右
+		 * k = 2:向下
+		 * k = 3:向左
+		 * k = 4:向上
+		 */
+		int k = 1;
+		int i = 0,j = 0;
+		for(int m = 1;m <= s;m++){
+			if(k == 1){
+				if(j < len && arr[i][j] == 0){
+					arr[i][j++] = m;
+				}else{
+					k = 2;
+					i++;  
+					j--;
+					m--;
+				}
+			}else if(k == 2){
+				if(i < len && arr[i][j] == 0){
+					arr[i++][j] = m;
+				}else{
+					k = 3;
+					i--;
+					j--;
+					m--;
+				}
+			}else if(k == 3){
+				if(j >= 0 && arr[i][j] == 0){
+					arr[i][j--] = m;
+				}else{
+					k = 4;
+					i--;
+					j++;
+					m--;
+				}
+			}else if(k == 4){
+				if(i >= 0 && arr[i][j] == 0){
+					arr[i--][j] = m;
+				}else{
+					k = 1;
+					i++;
+					j++;
+					m--;
+				}
+			}
+		}
+		
+		//遍历
+		for(int m = 0;m < arr.length;m++){
+			for(int n = 0;n < arr[m].length;n++){
+				System.out.print(arr[m][n] + "\t");
+			}
+			System.out.println();
+		}
+	}
+}
+```
+方式2:
+```java
+//方式2
+/*
+	01 02 03 04 05 06 07 
+	24 25 26 27 28 29 08 
+	23 40 41 42 43 30 09 
+	22 39 48 49 44 31 10 
+	21 38 47 46 45 32 11 
+	20 37 36 35 34 33 12 
+	19 18 17 16 15 14 13 
+ */
+public class RectangleTest1 {
+
+	public static void main(String[] args) {
+		int n = 7;
+		int[][] arr = new int[n][n];
+		
+		int count = 0; //要显示的数据
+		int maxX = n-1; //x轴的最大下标
+		int maxY = n-1; //Y轴的最大下标
+		int minX = 0; //x轴的最小下标
+		int minY = 0; //Y轴的最小下标
+		while(minX<=maxX) {
+			for(int x=minX;x<=maxX;x++) {
+				arr[minY][x] = ++count;
+			}
+			minY++;
+			for(int y=minY;y<=maxY;y++) {
+				arr[y][maxX] = ++count;
+			}
+			maxX--;
+			for(int x=maxX;x>=minX;x--) {
+				arr[maxY][x] = ++count;
+			}
+			maxY--;
+			for(int y=maxY;y>=minY;y--) {
+				arr[y][minX] = ++count;
+			}
+			minX++;
+		}
+		
+		
+		for(int i=0;i<arr.length;i++) {
+			for(int j=0;j<arr.length;j++) {
+				String space = (arr[i][j]+"").length()==1 ? "0":"";
+				System.out.print(space+arr[i][j]+" ");
+			}
+			System.out.println();
+		}
+	}
+}
+
+
+```
+<!-- endtab -->
+
+{% endtabs %}
+
+## Arrays工具类的使用
+
+
+## 数组中的常见异常
