@@ -19,14 +19,14 @@ nav:
   # Link: /link/ || fas fa-link
   # About: /about/ || fas fa-heart
 menu:
-  首页: / || fas fa-home
-  建站|| iconfont icon-bagua_qiantian:
-    模板: /hexo/template/
-  学科|| iconfont icon-bagua_duize:
-    英语: /discipline/01_englise/
-  核心基础|| iconfont icon-bagua_lihuo:
-   Java基础: /core/01_JavaSE/
-   IDEA: /core/08_IDEA/
+  首页: / || iconfont icon-baguajing
+  建站|| iconfont icon-gan:
+    模板: /hexo/template/ || iconfont icon-gan
+  学科|| iconfont icon-dui:
+    英语: /discipline/01_englise/ || iconfont icon-gan
+  核心基础|| iconfont icon-li:
+   Java基础: /core/01_JavaSE/ || iconfont icon-gan
+   IDEA: /core/08_IDEA/ || iconfont icon-dui
 
 # Code Blocks (代碼相關)
 # --------------------------------------
@@ -57,7 +57,7 @@ avatar:
   effect: false
 
 # Disable all banner image
-disable_top_img: true
+disable_top_img: 
 
 # The banner image of home page
 index_img:
@@ -184,10 +184,10 @@ reward:
 # Post edit
 # Easily browse and edit blog source code online.
 post_edit:
-  enable: true
+  enable: false
   # url: https://github.com/user-name/repo-name/edit/branch-name/subdirectory-name/
   # For example: https://github.com/jerryc127/butterfly.js.org/edit/main/source/
-  url:
+  url: https://gitee.com/-/ide/project/duanshiqi/blogs/edit/main/-/source/
 
 # Related Articles
 related_post:
@@ -912,7 +912,7 @@ css_prefix: true
 inject:
   head:
     # - <link rel="stylesheet" href="/xxx.css">
-    - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4171573_0nurru4bi8y9.css">
+    - <link rel="stylesheet" href="//at.alicdn.com/t/c/font_4171573_ad9ezuwaltl.css">
   bottom:
     # - <script src="xxxx"></script>
 
